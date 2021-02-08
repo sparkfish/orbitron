@@ -32,5 +32,8 @@ class ZipGeocodeImporter:
         "AdminCode2":np.str,"AdminName3":np.str,"AdminCode3":np.str,"Latitude":np.str,"Longitude":np.str,"Accuracy":np.str})
 
         df['Accuracy'] = df['Accuracy'].replace('', '-1') 
-
-        self.storage.execute_batch_zipgeodata_insert(df)
+        importframe = pd.DataFrame()
+        importframe['PostalCode'] = df['PostalCode']
+        importframe['Latitude'] = df['Latitude']
+        importframe['Longitude'] = df['Longitude']
+        self.storage.execute_batch_zipgeodata_insert(importframe)

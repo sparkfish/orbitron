@@ -1,7 +1,7 @@
 from os import getenv
 from dotenv import load_dotenv
 load_dotenv()
-
+import json
 import io
 import logging
 log = logging.getLogger()
@@ -27,13 +27,11 @@ class NeighborService:
 
         self.storage.disconnect()
 
-
-    def getNearestNeighbor(self, count: int, sourceType: str, postalCode: str):
+    def getNearestNeighbor(self, count: int, sourceType: str, postalCode: str, miles: int):
         log.info(f"Getting {count} nearest {sourceType} to postal code {postalCode}")
-        return self.storage.get_neighbors_by_zip(count, sourceType, postalCode)
+        neighbors = self.storage.get_neighbors_by_zip(count, sourceType, postalCode, miles)
+        for neighbor in neighbors:
+            neighbor.update(json.loads(neighbor["rowdata"]))
+            neighbor.pop("rowdata")
 
-    def getNearestNeighborWithin(self, count: int, sourceType: str, postalCode: str, miles: int):
-        log.info(f"Getting {count} nearest {sourceType} to postal code {postalCode}")
-        return self.storage.get_neighbors_by_zip(count, sourceType, postalCode, miles)
-
-
+        return neighbors
