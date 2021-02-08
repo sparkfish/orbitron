@@ -142,3 +142,4 @@ cython_debug/
 # Common data sources for this project
 US.txt
 facility.csv
+exportedDoctors.csv

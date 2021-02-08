@@ -64,7 +64,7 @@ class Storage:
         nump = dataframe.to_numpy()
 
         tpls = [tuple(x) for x in nump]
-
+        
         sql = """
         INSERT INTO Orbitron.NeighborLocations
         (SourceId, Name, Latitude, Longitude, RowData) 
