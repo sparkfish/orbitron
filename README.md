@@ -31,6 +31,7 @@ Place US.txt in the root folder and execute `python install.py` to perform initi
 The location data needs to be tied to a sourceType defined in the Orbitron.Sources table.  The "Name" field will correspond to the {sourceType} parameter of the request URL.  The script `load.py` can be used to load the neighbor data, it takes a csv file as a parameter, with columns in the following order:
 `[ "SourceId", "Name", "Latitude", "Longitude", "RowData" ]`
 Where "SourceId" is the appropriate Id of a source from the Orbitron.Sources table, "Name" is the name of the location, "Latitude" and "Longitude" are the geocoordinates of the location, and "RowData" is any additional data that is to be associated with the record, formatted as a JSON string.
+
 i.e. `1,Test Location,42.872004,-87.952139,"{""phone"": ""555-555-5555""}"`
 
 The csv file should not contain header data.
