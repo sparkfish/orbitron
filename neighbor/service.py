@@ -28,8 +28,12 @@ class NeighborService:
         self.storage.disconnect()
 
 
-    def getNearestNeighbor(self, count, sourceType: str, postalCode: str):
+    def getNearestNeighbor(self, count: int, sourceType: str, postalCode: str):
         log.info(f"Getting {count} nearest {sourceType} to postal code {postalCode}")
         return self.storage.get_neighbors_by_zip(count, sourceType, postalCode)
+
+    def getNearestNeighborWithin(self, count: int, sourceType: str, postalCode: str, miles: int):
+        log.info(f"Getting {count} nearest {sourceType} to postal code {postalCode}")
+        return self.storage.get_neighbors_by_zip(count, sourceType, postalCode, miles)
 
 

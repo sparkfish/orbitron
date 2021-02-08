@@ -1,4 +1,5 @@
 import logging
+from csvimport.zip_geocode import ZipGeocodeImporter
 
 def setup_logger(log_level=logging.DEBUG):
     # setup logging to console output
@@ -10,7 +11,7 @@ def setup_logger(log_level=logging.DEBUG):
     logger.addHandler(handler)
     return logger
 
-from fax.storage import Storage
+from neighbor.storage import Storage
 
 if __name__ == '__main__':
     log = setup_logger()
@@ -18,3 +19,8 @@ if __name__ == '__main__':
     storage = Storage()
     storage.connect()
     storage.setup_tables()
+
+    zipImport = ZipGeocodeImporter()
+    zipImport.importCsv()
+    storage.setup_postalcode_geometry()
+	
