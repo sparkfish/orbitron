@@ -62,6 +62,9 @@ See [http://localhost:8000/docs](http://localhost:8000/docs) for auto-generated 
 
 You should now be able to issue http requests using the API endpoints against the local server, such as GET `http://localhost:8000/nearest/100/pharmacies/to/75001`
 
+## Running in Azure
+This software can run in an Azure App Service with the custom startup command `python -m uvicorn main:app --host 0.0.0.0`
+
 ## Roadmap
 - Builtin support for pagination
 - administration features for "neighbor" data
