@@ -69,3 +69,4 @@ This software can run in an Azure App Service with the custom startup command `p
 - Builtin support for pagination
 - administration features for "neighbor" data
 - more robust logging options
+- Add parameter for GPS coordinates as location to get results within
