@@ -1,11 +1,11 @@
-<center>
-<img src="orbitron_vertical.svg" width="500" align="center" /> <br />
-<font size="6em" color="#3B6599"><i>A <span style="color:#F35059">&ldquo;</span>near me<span style="color:#F35059">&rdquo;</span> microservice for exposing your geocoded tabular data</i></font>
-</center>
+<p align="center">
+        <img src="orbitron_vertical.svg" width="500" align="center"></image> <br />
+        <h3 align="center">A &ldquo;near me&rdquo; microservice for exposing your geocoded tabular data</h3>
+</p>
 
 <hr size="4" noshade="noshade" />
 
-Orbitron is a microservice that you can deploy into your environment to expose a **location finder service** within your own application.  The service can be deployed in minutes to a cloud provider with minimal dependencies.  A simple script is provided to help you upload your data to a PorgresSQL server instance.
+**Orbitron** is a microservice that you can deploy into your environment to expose a **location finder service** within your own applications.  The service can be deployed in minutes to a cloud provider with minimal dependencies.  A simple script is provided to help you upload your data to a PorgresSQL server instance.
 
 ## Usage
 
