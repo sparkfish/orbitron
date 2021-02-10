@@ -1,6 +1,6 @@
 <p align="center">
-        <img src="orbitron_vertical.svg" width="500" align="center"></image> <br />
-        <h3 align="center">A &ldquo;near me&rdquo; microservice for exposing your geocoded tabular data</h3>
+        <img src="orbitron.svg" width="500" align="center"></image> <br />
+        <h3 align="center"><i>A &ldquo;near me&rdquo; microservice for exposing your geocoded tabular data</i></h3>
 </p>
 
 <hr size="4" noshade="noshade" />
@@ -93,3 +93,11 @@ This software can run in an Azure App Service with the custom startup command `p
 - [ ] administration features for "neighbor" data
 - [ ] more robust logging options
 - [ ] Add parameter for GPS coordinates as location to get results within
+
+## Credits
+
+A special thanks goes to [Matt McInerney](http://pixelspread.com/) for freely sharing his futuristic Orbitron font.
+
+## License
+
+This is an open source project licensed under MIT.
