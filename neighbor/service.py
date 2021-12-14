@@ -31,7 +31,15 @@ class NeighborService:
         log.info(f"Getting {count} nearest {sourceType} to postal code {postalCode}")
         neighbors = self.storage.get_neighbors_by_zip(count, sourceType, postalCode, miles)
         for neighbor in neighbors:
-            neighbor.update(json.loads(neighbor["rowdata"]))
+            rowdata = json.loads(neighbor['rowdata'])
+
+            ziplen = len(rowdata['zip'])
+
+            # dirty hack to prepend lost leading zeroes
+            if ziplen == 4 or ziplen == 8:
+                rowdata['zip'] = "0" + rowdata['zip']
+
+            neighbor.update(rowdata)
             neighbor.pop("rowdata")
 
         return neighbors
