@@ -1,18 +1,20 @@
 import logging
+
 log = logging.getLogger("fastapi")
 
 import sys
 
 from os import getenv
 from dotenv import load_dotenv
+
 load_dotenv()
 
 import psycopg2
 import psycopg2.extras as extras
 import datetime
 
-class Storage:
 
+class Storage:
     def __init__(self):
         self.host = getenv("DB_HOST")
         self.user = getenv("DB_USER")
@@ -21,16 +23,13 @@ class Storage:
         self.connection = None
         self.metersPerMile = 1609.344
 
-
     @property
     def connection_string(self):
         return f"host={self.host} user={self.user} dbname={self.database} password={self.password} sslmode=require"
 
-
     def connect(self):
         self.connection = psycopg2.connect(
-            self.connection_string,
-            cursor_factory=extras.RealDictCursor
+            self.connection_string, cursor_factory=extras.RealDictCursor
         )
         self.connection.autocommit = True
 
@@ -43,11 +42,11 @@ class Storage:
             cursor.execute(script, data)
         return cursor
 
-    def execute_batch_zipgeodata_insert(self, dataframe, page_size=150):    
+    def execute_batch_zipgeodata_insert(self, dataframe, page_size=150):
         nump = dataframe.to_numpy()
 
         tpls = [tuple(x) for x in nump]
-    
+
         sql = """
         INSERT INTO Orbitron.PostalCodeGeodata
         (PostalCode,Latitude,Longitude) 
@@ -64,7 +63,7 @@ class Storage:
         nump = dataframe.to_numpy()
 
         tpls = [tuple(x) for x in nump]
-        
+
         sql = """
         INSERT INTO Orbitron.NeighborLocations
         (SourceId, Name, Latitude, Longitude, RowData) 
@@ -80,7 +79,6 @@ class Storage:
     def disconnect(self):
         if self.connection:
             self.connection.close()
-
 
     def setup_tables(self):
         SQL = """
@@ -144,19 +142,23 @@ class Storage:
 			
             CREATE INDEX idx_NeighborLocations_Geometry ON Orbitron.NeighborLocations USING gist("Geometry");
     
-        """   
+        """
         return self.execute(SQL)
 
     def insert_source(self, sourceName):
         SQL = """
             INSERT INTO Orbitron.Sources(Name, UpdateDate) VALUES (%(name)s, %(updateDate)s) RETURNING Id
         """
-        result = self.execute(SQL, {'name': sourceName, 'updateDate': datetime.datetime.today()})
+        result = self.execute(
+            SQL, {"name": sourceName, "updateDate": datetime.datetime.today()}
+        )
         id = result.fetchone()["id"]
         return id
 
-    def get_neighbors_by_zip(self, count: int, sourceType: str, postalCode: str, distanceLimitInMiles: int):
-        # ST_Distance isn't index-aware, so use index-aware ST_DWithin with a distanceLimit 
+    def get_neighbors_by_zip(
+        self, count: int, sourceType: str, postalCode: str, distanceLimitInMiles: int
+    ):
+        # ST_Distance isn't index-aware, so use index-aware ST_DWithin with a distanceLimit
         #  to prune the amount of data to sort
         distanceLimit = self.metersPerMile * distanceLimitInMiles
 
@@ -169,7 +171,12 @@ class Storage:
             ORDER BY ST_Distance(loc."Geometry", zip."Geometry")
             FETCH FIRST %(count)s ROWS ONLY
         """
-        args_ = { "count": count, "sourceType": sourceType, "postalCode": postalCode, "distanceLimit" : distanceLimit}
+        args_ = {
+            "count": count,
+            "sourceType": sourceType,
+            "postalCode": postalCode,
+            "distanceLimit": distanceLimit,
+        }
 
         cur = self.execute(SQL, args_)
 
@@ -183,15 +190,12 @@ class Storage:
     def __exit__(self, exception_type, exception_value, tb):
         self.disconnect()
 
-
     def show_psycopg2_exception(self, err):
         # get details about the exception
-        err_type, err_obj, traceback = sys.exc_info()    
+        err_type, err_obj, traceback = sys.exc_info()
         # get the line number when exception occured
-        line_n = traceback.tb_lineno    
+        line_n = traceback.tb_lineno
 
         log.error(f"psycopg2 ERROR: {err} on line number: {line_n}")
         log.error(f"psycopg2 traceback: {traceback} -- type: {err_type}")
         log.error(f"psycopg2 error object: {err_obj}")
-
-        

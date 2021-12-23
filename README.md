@@ -12,7 +12,7 @@
 To perform a search against your endpoint, simply use the following fluent URL: `/nearest/{limit}/{source-name}/to/{zip-code}`.  This will perform a distance search against stored geocoded tabular data using functionality exposed through PostgreSQL.
 
 ## Example
-A query for the nearinest pharmacies: `/nearest/100/pharmacies/to/75001`
+A query for the nearest pharmacies: `/nearest/100/pharmacies/to/75001`
 
 ```javascript
 {
