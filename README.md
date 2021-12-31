@@ -71,28 +71,20 @@ Using `Python>=3.8`, install dependencies with `pip install -r requirements.txt`
 See [http://localhost:8000/docs](http://localhost:8000/docs) for auto-generated Swagger API documentation.
 
 ## Quick start using open pharamacy location data on local development server
-1.) Set up a postgresql instance with PostGIS
+1. Set up a postgresql instance with PostGIS
 
-2.) Perform installation as indicated in *"Installation"* section.
+2. Perform installation as indicated in *"Installation"* section.
 
-3.) Download Rx Open's pharacy location database from https://rxopen.org/api/v1/map/download/facility and place the resulting `facility.csv` in the project's root folder.
+3. Download Rx Open's pharacy location database from https://rxopen.org/api/v1/map/download/facility and place the resulting `facility.csv` in the project's root folder.
 
-4.) Execute `python import-pharmacies.py`
+4. Execute `python import-pharmacies.py`
 
-5.) Run development server, as indicated in *"Running"* section.
+5. Run development server, as indicated in *"Running"* section.
 
 You should now be able to issue http requests using the API endpoints against the local server, such as `http://localhost:8000/nearest/100/pharmacies/to/75001`
 
 ## Running in Azure
 This software can run in an Azure App Service with the custom startup command `python -m uvicorn main:app --host 0.0.0.0`
-
-## Roadmap
-- [X] Initial API implementation
-- [X] Sample upload script
-- [ ] Builtin support for pagination
-- [ ] administration features for "neighbor" data
-- [ ] more robust logging options
-- [ ] Add parameter for GPS coordinates as location to get results within
 
 ## Credits
 
